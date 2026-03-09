@@ -2,6 +2,13 @@ const movieService = require("../services/movie.service");
 
 const createMovie = async (req, res) => {
   try {
+    const { title, category, videoUrl } = req.body;
+    if (!title || !category || !videoUrl) {
+      return res
+        .status(400)
+        .json({ message: "title, category, videoUrl required" });
+    }
+
     const movie = await movieService.createMovie(req.body);
     res.status(201).json(movie);
   } catch (error) {
